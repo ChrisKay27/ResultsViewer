@@ -15,15 +15,17 @@ public class DetectionRate_VS_PCOT_VS_DDP extends JFrame{
     public static void main(String[] args) {
         JFrame frame = new JFrame();
 
-        long experimentNumber = 1468980097968L;
+        long experimentNumber = 1469586942311L;
         DefaultCategoryDataset dataset = new DefaultCategoryDataset(); //AND experimentNumber = 1467483185469
 
 
-        List<Pair<Double, Double>> series = DBConn.getSeries("SELECT AVG(PCOT), detectionInterval FROM results WHERE deadlockDetectionProtocol like 'Agent%' AND experimentNumber = "+experimentNumber+" GROUP BY detectionInterval ORDER BY detectionInterval;");
+        List<Pair<Double, Double>> series = DBConn.getSeries("SELECT AVG(PCOT), detectionInterval FROM results WHERE deadlockDetectionProtocol like 'Agent%' AND experimentNumber = "
+                +experimentNumber+" GROUP BY detectionInterval ORDER BY detectionInterval;");
         series.forEach(p -> dataset.addValue(p.getKey(),"Agent Deadlock Detection Protocol",p.getValue()+""));
 
 
-        series = DBConn.getSeries("SELECT AVG(PCOT), detectionInterval FROM results WHERE deadlockDetectionProtocol like 'Time%' AND experimentNumber = "+experimentNumber+" GROUP BY detectionInterval ORDER BY detectionInterval;");
+        series = DBConn.getSeries("SELECT AVG(PCOT), detectionInterval FROM results WHERE deadlockDetectionProtocol like 'Time%' AND experimentNumber = "
+                +experimentNumber+" GROUP BY detectionInterval ORDER BY detectionInterval;");
         series.forEach(p -> dataset.addValue(p.getKey(),"Timeout Detection Protocol",p.getValue()+""));
 
 
