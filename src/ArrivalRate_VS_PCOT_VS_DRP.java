@@ -10,21 +10,21 @@ import java.util.List;
 /**
  * Created by Chris on 7/1/2016.
  */
-public class ArrivalRate_VS_PCOT_VS_DDP extends JFrame{
+public class ArrivalRate_VS_PCOT_VS_DRP extends JFrame{
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
 
-        long experimentNumber = 1470366779238L;
+        long experimentNumber = 1470367786769L;
         DefaultCategoryDataset dataset = new DefaultCategoryDataset(); //AND experimentNumber = 1467483185469
 
 
-        List<Pair<Double, Double>> series = DBConn.getSeries("SELECT AVG(PCOT), arrivalRate FROM results WHERE deadlockDetectionProtocol like 'Agent%' AND experimentNumber = "+experimentNumber+" GROUP BY arrivalRate ORDER BY arrivalRate;");
-        series.forEach(p -> dataset.addValue(p.getKey(),"Agent Deadlock Detection Protocol",p.getValue()+""));
+        List<Pair<Double, Double>> series = DBConn.getSeries("SELECT AVG(PCOT), arrivalRate FROM results WHERE deadlockResolutionProtocol like 'Agent%' AND experimentNumber = "+experimentNumber+" GROUP BY arrivalRate ORDER BY arrivalRate;");
+        series.forEach(p -> dataset.addValue(p.getKey(),"Agent Deadlock Resolution Protocol",p.getValue()+""));
 
 
-        series = DBConn.getSeries("SELECT AVG(PCOT), arrivalRate FROM results WHERE deadlockDetectionProtocol like 'Time%' AND experimentNumber = "+experimentNumber+" GROUP BY arrivalRate ORDER BY arrivalRate;");
-        series.forEach(p -> dataset.addValue(p.getKey(),"Timeout Detection Protocol",p.getValue()+""));
+        series = DBConn.getSeries("SELECT AVG(PCOT), arrivalRate FROM results WHERE deadlockResolutionProtocol like 'Rand%' AND experimentNumber = "+experimentNumber+" GROUP BY arrivalRate ORDER BY arrivalRate;");
+        series.forEach(p -> dataset.addValue(p.getKey(),"Random Resolution Protocol",p.getValue()+""));
 
 
         JFreeChart lineChart = ChartFactory.createLineChart("Results", "Arrival Rate", "PCOT", dataset);
