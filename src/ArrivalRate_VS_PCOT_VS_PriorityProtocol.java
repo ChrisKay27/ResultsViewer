@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Chris on 7/1/2016.
  */
-public class Main extends JFrame{
+public class ArrivalRate_VS_PCOT_VS_PriorityProtocol extends JFrame{
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();

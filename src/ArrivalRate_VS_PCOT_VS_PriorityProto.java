@@ -27,7 +27,7 @@ public class ArrivalRate_VS_PCOT_VS_PriorityProto extends JFrame{
         series.forEach(p -> dataset.addValue(p.getKey(),"Earliest Deadline First",p.getValue()+""));
 
 
-        JFreeChart lineChart = ChartFactory.createLineChart("Results", "Arrival Rate", "PCOT", dataset);
+        JFreeChart lineChart = ChartFactory.createLineChart("ArrivalRate_VS_PCOT_VS_PriorityProto", "Arrival Rate", "PCOT", dataset);
 
         ChartPanel cPanel = new ChartPanel(lineChart);
         frame.setContentPane(cPanel);

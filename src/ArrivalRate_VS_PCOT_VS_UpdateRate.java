@@ -15,7 +15,7 @@ public class ArrivalRate_VS_PCOT_VS_UpdateRate extends JFrame{
     public static void main(String[] args) {
         JFrame frame = new JFrame();
 
-        long experimentNumber = 1479437266535L;
+        long experimentNumber = 1496376679584L;
         DefaultCategoryDataset dataset = new DefaultCategoryDataset(); //AND experimentNumber = 1467483185469
 
 
@@ -39,7 +39,7 @@ public class ArrivalRate_VS_PCOT_VS_UpdateRate extends JFrame{
         series.forEach(p -> dataset.addValue(p.getKey(),"updateRate 1",p.getValue()+""));
 
 
-        JFreeChart lineChart = ChartFactory.createLineChart("Results", "Arrival Rate", "PCOT", dataset);
+        JFreeChart lineChart = ChartFactory.createLineChart("ArrivalRate_VS_PCOT_VS_UpdateRate", "Arrival Rate", "PCOT", dataset);
 
         ChartPanel cPanel = new ChartPanel(lineChart);
         frame.setContentPane(cPanel);

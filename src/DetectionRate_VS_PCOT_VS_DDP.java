@@ -29,7 +29,7 @@ public class DetectionRate_VS_PCOT_VS_DDP extends JFrame{
         series.forEach(p -> dataset.addValue(p.getKey(),"Timeout Detection Protocol",p.getValue()+""));
 
 
-        JFreeChart lineChart = ChartFactory.createLineChart("Results", "Arrival Rate", "PCOT", dataset);
+        JFreeChart lineChart = ChartFactory.createLineChart("DetectionRate_VS_PCOT_VS_DDP", "Arrival Rate", "PCOT", dataset);
 
         ChartPanel cPanel = new ChartPanel(lineChart);
         frame.setContentPane(cPanel);

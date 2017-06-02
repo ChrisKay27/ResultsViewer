@@ -3,6 +3,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
 import java.util.List;
@@ -15,7 +16,8 @@ public class ArrivalRate_VS_PCOT_VS_DRP extends JFrame{
     public static void main(String[] args) {
         JFrame frame = new JFrame();
 
-        long experimentNumber = 1470367786769L;
+
+        long experimentNumber = 1477618496227L;
         DefaultCategoryDataset dataset = new DefaultCategoryDataset(); //AND experimentNumber = 1467483185469
 
 
@@ -27,7 +29,7 @@ public class ArrivalRate_VS_PCOT_VS_DRP extends JFrame{
         series.forEach(p -> dataset.addValue(p.getKey(),"Random Resolution Protocol",p.getValue()+""));
 
 
-        JFreeChart lineChart = ChartFactory.createLineChart("Results", "Arrival Rate", "PCOT", dataset);
+        JFreeChart lineChart = ChartFactory.createLineChart("ArrivalRate_VS_PCOT_VS_DRP", "Arrival Rate", "PCOT", dataset);
 
         ChartPanel cPanel = new ChartPanel(lineChart);
         frame.setContentPane(cPanel);
