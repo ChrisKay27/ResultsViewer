@@ -1,3 +1,6 @@
+package deprecated;
+
+import database.DBConn;
 import javafx.util.Pair;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

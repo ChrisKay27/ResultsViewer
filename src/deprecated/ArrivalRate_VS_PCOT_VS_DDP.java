@@ -1,3 +1,6 @@
+package deprecated;
+
+import database.DBConn;
 import javafx.util.Pair;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -33,7 +36,7 @@ public class ArrivalRate_VS_PCOT_VS_DDP extends JFrame{
         series.forEach(p -> dataset.addValue(p.getKey(),"MAEDD",p.getValue()+""));
 
 
-        JFreeChart lineChart = ChartFactory.createLineChart("ArrivalRate_VS_PCOT_VS_DDP", "Arrival Rate", "PCOT", dataset);
+        JFreeChart lineChart = ChartFactory.createLineChart("deprecated.ArrivalRate_VS_PCOT_VS_DDP", "Arrival Rate", "PCOT", dataset);
 
         ChartPanel cPanel = new ChartPanel(lineChart);
         frame.setContentPane(cPanel);

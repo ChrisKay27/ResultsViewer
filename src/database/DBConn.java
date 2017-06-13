@@ -1,3 +1,5 @@
+package database;
+
 import javafx.util.Pair;
 import javafx.util.converter.IntegerStringConverter;
 
@@ -45,5 +47,35 @@ public class DBConn {
     }
 
 
+
+    public static List<String> getPossibleValues(long experimentNumber, String column) {
+        Connection conn = null;
+
+        List<String> possibleValues = new ArrayList<>();
+
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/ddb_results?" +
+                            "user=Mani&password=thesis");
+
+
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT "+column+" FROM results WHERE experimentNumber = ?");
+//            statement.setString(1, column);
+            statement.setLong(1, experimentNumber);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next())
+                possibleValues.add(resultSet.getString(column));
+
+
+        } catch (SQLException ex) {
+            // handle any errors
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+
+        return possibleValues;
+    }
 
 }
