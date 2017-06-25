@@ -199,7 +199,7 @@ public class ResultsViewer extends JFrame {
         if (!xAxisMinSliderValue.isEmpty())
             xAxisMinSlider.getSlider().setValue(Integer.parseInt(xAxisMinSliderValue));
         if (!xAxisMaxSliderValue.isEmpty())
-            xAxisMaxSlider.getSlider().setValue(Integer.parseInt(xAxisMaxSliderValue    ));
+            xAxisMaxSlider.getSlider().setValue(Integer.parseInt(xAxisMaxSliderValue));
     }
 
 }
