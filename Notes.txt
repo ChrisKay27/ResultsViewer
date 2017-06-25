@@ -1,0 +1,21 @@
+
+
+Experiment number is necessary because the results can be skewed by experiments that vary over different variables.
+
+Example:
+You run an experiment with the parameters:
+
+SEED:1
+Topology:HyperCube
+NumPages:100
+ArrivalRate:100,200,300
+DDP:AgentDeadlockDetectionProtocol,TimeoutDeadlockDetection,ChandyMisraHaasDDP
+DRP:FirstDeadlockResolution
+PP:EarliestDeadlineFirst
+DetectionInterval:200
+MaxActiveTransactions:10
+AgentsHistoryLength:3
+UpdateRate:.5
+
+And now you want to see the results of it, but you ran another experiment with NumPages:100000.
+You don't want to see those results combined with this experiment do you?

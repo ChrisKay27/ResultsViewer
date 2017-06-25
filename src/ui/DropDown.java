@@ -1,5 +1,7 @@
 package ui;
 
+import utils.TextUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -23,7 +25,7 @@ public class DropDown<E> extends JPanel {
 
 
     public DropDown(String labelText, List<E> options) {
-        this.label = new JLabel(labelText);
+        this.label = new JLabel(TextUtils.splitCamelCase(labelText));
         this.comboBox = new JComboBox<>();
         DefaultComboBoxModel<E> model = new DefaultComboBoxModel<>();
         options.forEach(model::addElement);

@@ -2,6 +2,7 @@ package database;
 
 import javafx.util.Pair;
 import javafx.util.converter.IntegerStringConverter;
+import ui.ExperimentParams;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,13 +15,12 @@ public class DBConn {
 
 
     public static List<Pair<Double,Double>> getSeries(String query) {
-        Connection conn = null;
+        Connection conn;
 
         List<Pair<Double,Double>> series = new ArrayList<>();
 
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/ddb_results?" +
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/ddb_results?" +
                             "user=Mani&password=thesis");
 
 
@@ -29,9 +29,10 @@ public class DBConn {
             ResultSet resultSet = statement.executeQuery(query);
 
             while(resultSet.next()){
-                double arrivalRate = resultSet.getDouble(1);
-                double PCOT = resultSet.getDouble(2);
-                series.add(new Pair<>(arrivalRate,PCOT));
+                double PCOT = resultSet.getDouble(1);
+                double arrivalRate = resultSet.getDouble(2);
+
+                series.add(new Pair<>(PCOT,arrivalRate));
             }
 
 
@@ -48,7 +49,7 @@ public class DBConn {
 
 
 
-    public static List<String> getPossibleValues(long experimentNumber, String column) {
+    public static List<String> getPossibleValues( ExperimentParams column) {
         Connection conn = null;
 
         List<String> possibleValues = new ArrayList<>();
@@ -58,14 +59,16 @@ public class DBConn {
                             "user=Mani&password=thesis");
 
 
-            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT "+column+" FROM results WHERE experimentNumber = ?");
-//            statement.setString(1, column);
-            statement.setLong(1, experimentNumber);
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT "+column.name()+" FROM results");
+
+//            statement.setString(1, column.name());
+
 
             ResultSet resultSet = statement.executeQuery();
 
+
             while(resultSet.next())
-                possibleValues.add(resultSet.getString(column));
+                possibleValues.add(resultSet.getString(1));
 
 
         } catch (SQLException ex) {
@@ -78,4 +81,8 @@ public class DBConn {
         return possibleValues;
     }
 
+
+    public static void main(String[] args) {
+        System.out.println(getPossibleValues(ExperimentParams.deadlockDetectionProtocol));
+    }
 }
