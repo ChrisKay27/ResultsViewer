@@ -23,48 +23,51 @@ public class GraphWindow extends JPanel {
         ExperimentParams xAxis = queryParams.getXAxisParam();
         ExperimentParams seriesParam = queryParams.getSeriesParam();
 
-
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-
         List<String> possibleValues = DBConn.getPossibleValues( seriesParam );
 
 
 
-        for (String possibleValue : possibleValues) {
 
-            String query = "SELECT  AVG(PCOT), "+xAxis+" \nFROM results \n" +
-                    "WHERE "+seriesParam+" = '"+possibleValue+"' ";
+        String[] yValues = {"PCOT", "messageOverHeadIncurred"};
+
+        for (String yValue : yValues) {
+
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
 
-            Map<ExperimentParams, String> paramValues = queryParams.getParamValues();
-            for (ExperimentParams expParam : paramValues.keySet()) {
+            for (String possibleValue : possibleValues) {
 
-                if( expParam != queryParams.getSeriesParam() && expParam != queryParams.getXAxisParam() ){
+                String query = "SELECT AVG("+yValue+"), "+xAxis+" \nFROM results \n" +
+                        "WHERE "+seriesParam+" = '"+possibleValue+"' ";
 
-                    query += "\n AND " + expParam.name() + " = '" + paramValues.get(expParam) + "' ";
+
+                Map<ExperimentParams, String> paramValues = queryParams.getParamValues();
+                for (ExperimentParams expParam : paramValues.keySet()) {
+
+                    if( expParam != queryParams.getSeriesParam() && expParam != queryParams.getXAxisParam() ){
+
+                        query += "\n AND " + expParam.name() + " = '" + paramValues.get(expParam) + "' ";
+                    }
                 }
+
+                //Add x axis range value
+                query += "\n AND " + xAxis + " BETWEEN " + queryParams.getxAxisRange().getxMin() + " AND " + queryParams.getxAxisRange().getxMax() ;
+
+
+                query += "\n GROUP BY "+xAxis+"\n ORDER BY "+xAxis+";";
+
+
+                List<Pair<Double, Double>> series = DBConn.getSeries(query);
+
+
+                series.forEach(p -> dataset.addValue(p.getKey(),possibleValue,p.getValue()+""));
             }
 
-            //Add x axis range value
-            query += "\n AND " + xAxis + " BETWEEN " + queryParams.getxAxisRange().getxMin() + " AND " + queryParams.getxAxisRange().getxMax() ;
+            JFreeChart lineChart = ChartFactory.createLineChart(yValue + " vs " + xAxis + " vs " + seriesParam, xAxis.name(), yValue, dataset);
 
+            ChartPanel cPanel = new ChartPanel(lineChart);
 
-            query += "\n GROUP BY "+xAxis+"\n ORDER BY "+xAxis+";";
-
-
-            List<Pair<Double, Double>> series = DBConn.getSeries(query);
-
-
-            series.forEach(p -> dataset.addValue(p.getKey(),possibleValue,p.getValue()+""));
+            add(cPanel);
         }
-
-
-        JFreeChart lineChart = ChartFactory.createLineChart("PCOT vs " + xAxis + " vs " + seriesParam, xAxis.name(), "PCOT", dataset);
-
-        ChartPanel cPanel = new ChartPanel(lineChart);
-
-        add(cPanel);
-
     }
 }

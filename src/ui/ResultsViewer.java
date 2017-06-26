@@ -19,6 +19,8 @@ public class ResultsViewer extends JFrame {
     private static final ExperimentParams DEFAULT_X_AXIS_PARAM = ExperimentParams.arrivalRate;
     private static final ExperimentParams DEFAULT_SERIES_PARAM = ExperimentParams.deadlockDetectionProtocol;
 
+    private final JButton createGraph;
+
     private Map<ExperimentParams, DropDown<String>> expParamsToDD = new HashMap<>();
     private GraphWindow graphsPanel;
 
@@ -89,7 +91,7 @@ public class ResultsViewer extends JFrame {
             expParamsToDD.get(DEFAULT_SERIES_PARAM).setEnabled(false);
 
 
-            JButton createGraph = new JButton("Create Graph");
+            createGraph = new JButton("Create Graph");
             createGraph.addActionListener(e -> {
 
                 if (graphsPanel != null)
@@ -111,10 +113,10 @@ public class ResultsViewer extends JFrame {
             paramsPanel.add(createGraph);
             content.add(paramsPanel);
 
-            createGraph.doClick();
+
         }
-
-
+        loadSettings();
+        createGraph.doClick();
         setContentPane(content);
 
         pack();
@@ -125,7 +127,7 @@ public class ResultsViewer extends JFrame {
                 saveSettings();
             }
         });
-        loadSettings();
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);

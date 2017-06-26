@@ -21,7 +21,7 @@ public class DBConn {
 
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/ddb_results?" +
-                            "user=Mani&password=thesis");
+                            "user=Mani&password=thesis&useSSL=false");
 
 
             Statement statement = conn.createStatement();
