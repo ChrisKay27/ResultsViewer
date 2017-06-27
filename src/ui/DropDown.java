@@ -7,15 +7,17 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Chris on 1/9/2017.
  */
 public class DropDown<E> extends JPanel {
 
-
-    private final JComboBox<E> comboBox;
+    private Map<String, E> labelToValue = new HashMap<>();
+    private final JComboBox<String> comboBox;
     private final JLabel label;
 
 
@@ -25,10 +27,16 @@ public class DropDown<E> extends JPanel {
 
 
     public DropDown(String labelText, List<E> options) {
+
         this.label = new JLabel(TextUtils.splitCamelCase(labelText));
         this.comboBox = new JComboBox<>();
-        DefaultComboBoxModel<E> model = new DefaultComboBoxModel<>();
-        options.forEach(model::addElement);
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        options.forEach(e -> {
+            String label = TextUtils.splitCamelCase(e.toString());
+            labelToValue.put(label, e);
+            model.addElement(label);
+        });
 
         comboBox.setModel(model);
         comboBox.setPreferredSize(new Dimension(100,25));
@@ -36,7 +44,6 @@ public class DropDown<E> extends JPanel {
 
         add(label);
         add(comboBox);
-
     }
 
 
@@ -54,17 +61,19 @@ public class DropDown<E> extends JPanel {
     }
 
     public E getSelection() {
-        return (E) comboBox.getSelectedItem();
+        return labelToValue.get(comboBox.getSelectedItem());
     }
 
 
 
-    public void addItem(E item) {
-        comboBox.addItem(item);
+    public void addItem(E e) {
+        String label = TextUtils.splitCamelCase(e.toString());
+        labelToValue.put(label, e);
+        comboBox.addItem(label);
     }
 
     public void setSelectedItem(E e) {
-         comboBox.setSelectedItem(e);
+         comboBox.setSelectedItem(TextUtils.splitCamelCase(e.toString()));
     }
 
     public Object getSelectedItem() {
@@ -115,7 +124,7 @@ public class DropDown<E> extends JPanel {
 //        comboBox.getEditor().getEditorComponent().setEnabled(enabled);
     }
 
-    public JComboBox<E> getDropDown() {
+    public JComboBox<String> getDropDown() {
         return comboBox;
     }
 

@@ -7,6 +7,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
+import utils.TextUtils;
 
 import javax.swing.*;
 import java.util.List;
@@ -60,10 +61,10 @@ public class GraphWindow extends JPanel {
                 List<Pair<Double, Double>> series = DBConn.getSeries(query);
 
 
-                series.forEach(p -> dataset.addValue(p.getKey(),possibleValue,p.getValue()+""));
+                series.forEach(p -> dataset.addValue(p.getKey(), TextUtils.splitCamelCase(possibleValue),p.getValue()+""));
             }
 
-            JFreeChart lineChart = ChartFactory.createLineChart(yValue + " vs " + xAxis + " vs " + seriesParam, xAxis.name(), yValue, dataset);
+            JFreeChart lineChart = ChartFactory.createLineChart(TextUtils.splitCamelCase(yValue + " vs " + xAxis + " vs " + seriesParam), xAxis.name(), yValue, dataset);
 
             ChartPanel cPanel = new ChartPanel(lineChart);
 
