@@ -81,7 +81,7 @@ public class ResultsViewer extends JFrame {
                     possibleValues.sort(Comparator.comparingInt(Integer::valueOf));
 
                 DropDown<String> DD = new DropDown<>(expParams.name(), possibleValues);
-                DD.setDropdownPreferredSize(new Dimension(150, DD.getDropDown().getPreferredSize().height));
+                DD.setDropdownPreferredSize(new Dimension(175, DD.getDropDown().getPreferredSize().height));
                 paramsPanel.add(DD);
                 expParamsToDD.put(expParams, DD);
             }
@@ -184,7 +184,7 @@ public class ResultsViewer extends JFrame {
         for (ExperimentParams expParam : expParamsToDD.keySet()) {
             String setting = settings.get(expParam.name());
 
-            if (setting.isEmpty())
+            if (!setting.isEmpty())
                 expParamsToDD.get(expParam).setSelectedItem(setting);
         }
 
